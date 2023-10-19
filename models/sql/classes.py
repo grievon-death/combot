@@ -1,0 +1,1 @@
+# TODO: Modelar as classes possíveis para serem atribuídas a um personagem.

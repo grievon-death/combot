@@ -1,0 +1,1 @@
+# TODO: Modelar numa tabela SQL um personagem, único, baseado no ID de usuário do Discord.
