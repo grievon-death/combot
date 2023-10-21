@@ -2,12 +2,42 @@
 from sqlalchemy import String
 from sqlalchemy.orm import DeclarativeBase, Mapped, mapped_column, relationship
 
+from models.sql.classes import PossibleClasses
+
 
 class Character(DeclarativeBase):
     __table__ = 'user_character'
 
-    id: Mapped[str] = mapped_column( # User o ID de usuário do discord. 
+    id: Mapped[int] = mapped_column(
         primary_key=True,
-        autoincrement=False,
+        autoincrement=True,
     )
-
+    user: Mapped[str] = mapped_column(
+        nullable=False,
+        unique=True,
+    )
+    level: Mapped[int] = mapped_column(
+        nullable=False,
+        default=1,
+    )
+    life: Mapped[int] = mapped_column(
+        nullable=False,
+        default=100,
+    )
+    energy: Mapped[int] = mapped_column(
+        nullable=False,
+        defaul=100,
+    )
+    atack: Mapped[int] = mapped_column(
+        nullable=False,
+        default=5,
+    )
+    defense: Mapped[int] = mapped_column(
+        nullable=False,
+        default=5,
+    )
+    job: relationship(Mapped[PossibleClasses]) = mapped_column(  # TODO: Tem que testar isso aqui ein.
+        nullable=True,
+    )
+    # TODO: Varificar uma forma de fazer a bolsa.
+    # Talvez salvar no Mongo e recuperar de lá.

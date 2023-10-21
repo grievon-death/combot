@@ -4,10 +4,10 @@
 
 # NOSQL: Será usado para iniciar as ações de personagem. Eg: Batalhas, Lojas, Expedições.
 
-# SQlite3: Configurações de servidor do BOT. Eg: Lingaguem, Exp.
 from sqlalchemy import create_engine
+from pymongo import MongoClient
 
-from settings.general import SQL_CONF
+from settings.general import SQL_CONF, NOSQL_CONF
 
 sql_engine = create_engine(
     'mysql://{}:{}@{}:{}/{}'.format(
@@ -20,3 +20,11 @@ sql_engine = create_engine(
     echo=True, # Loga informações de conexão com o banco de dados.
 )
 
+nosql_engine = MongoClient(
+    'mongodb://{}:{}@{}:{}'.format(
+        NOSQL_CONF['user'],
+        NOSQL_CONF['password'],
+        NOSQL_CONF['host'],
+        NOSQL_CONF['port'],
+    )
+)[NOSQL_CONF['db']]
