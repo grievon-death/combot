@@ -13,6 +13,7 @@ class Character(DeclarativeBase):
         autoincrement=True,
     )
     user: Mapped[str] = mapped_column(
+        String(50),
         nullable=False,
         unique=True,
     )
@@ -36,7 +37,8 @@ class Character(DeclarativeBase):
         nullable=False,
         default=5,
     )
-    job: relationship(Mapped[PossibleClasses]) = mapped_column(  # TODO: Tem que testar isso aqui ein.
+    job: Mapped[PossibleClasses] = relationship(
+        back_populates='user_character',
         nullable=True,
     )
     # TODO: Varificar uma forma de fazer a bolsa.
