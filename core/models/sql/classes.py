@@ -1,8 +1,10 @@
 
-from sqlalchemy.orm import DeclarativeBase, Mapped, mapped_column
+from sqlalchemy.orm import Mapped, mapped_column
+
+from models.cursors import SqlBase
 
 
-class PossibleClasses(DeclarativeBase):
+class PossibleClasses(SqlBase):
     __table__ = 'possible_classes'
 
     id: Mapped[int] = mapped_column(

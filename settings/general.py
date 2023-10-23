@@ -1,5 +1,4 @@
 import os
-import logging.config as logger
 
 
 # SQL Database configuration.
@@ -25,12 +24,12 @@ BOT_TOKEN = os.environ.get('BOT_TOKEN')
 
 # Configuração de logs
 LOGLEVEL = os.environ.get('LOGLEVEL', 'debug').upper()
-logger.dictConfig({
+LOGCONF = {
     'version': 1,
     'disable_existing_loggers': False,
     'formatters': {
         'default': {
-            'format': '[%(asctime)s - %(levelname)s - %(name)s:%(lineno)s] %(message)s',
+            'format': '[%(asctime)s][%(levelname)s][%(name)s:%(lineno)s] -> %(message)s',
         },
     },
     'handlers': {
@@ -43,13 +42,13 @@ logger.dictConfig({
     'loggers': {
         '': {
             'level': LOGLEVEL,
-            'handlers': ['console', 'logfile'],
+            'handlers': ['console'],
             'propagate': False,
         },
         'combot': {
             'level': LOGLEVEL,
-            'handlers': ['console', 'logfile'],
+            'handlers': ['console'],
             'propagate': False,
         },
     },
-})
+}

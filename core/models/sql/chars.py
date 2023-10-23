@@ -1,11 +1,12 @@
 # TODO: Modelar numa tabela SQL um personagem, único, baseado no ID de usuário do Discord.]
 from sqlalchemy import String
-from sqlalchemy.orm import DeclarativeBase, Mapped, mapped_column, relationship
+from sqlalchemy.orm import Mapped, mapped_column, relationship
 
 from models.sql.classes import PossibleClasses
+from models.cursors import SqlBase
 
 
-class Character(DeclarativeBase):
+class Character(SqlBase):
     __table__ = 'user_character'
 
     id: Mapped[int] = mapped_column(
