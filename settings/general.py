@@ -4,7 +4,7 @@ import os
 # SQL Database configuration.
 SQL_CONF = {
     'host': os.environ.get('SQL_HOST', '127.0.0.1'),
-    'port': int(os.environ.get('SQL_PORT', '3306')),
+    'port': int(os.environ.get('SQL_PORT', '5432')),
     'user': os.environ.get('SQL_USER', 'root'),
     'password': os.environ.get('SQL_PASSWORD', 'root'),
     'db': os.environ.get('SQL_DB', 'combot'),

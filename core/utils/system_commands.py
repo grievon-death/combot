@@ -1,5 +1,7 @@
+import asyncio
 import logging
 
+from core.api.app import app
 from core.models.cursors import sql_engine
 from core.models.sql import classes, chars
 
@@ -12,14 +14,14 @@ class Command:
     _log = logging.getLogger(__name__)
 
     @staticmethod
-    def migrate() -> None:
+    async def migrate() -> None:
         """
         Realiza a migração do banco de dados.
         """
         try:
             Command._log.info('Iniciando a migração.')
-            classes.migration(sql_engine)
-            chars.migration(sql_engine)
+            await classes.migration(sql_engine)
+            await chars.migration(sql_engine)
         except Exception as e:
             Command._log.debug('Ops... Problemas com a migração dos dados.')
             raise Exception(e.args)
@@ -32,3 +34,10 @@ class Command:
         Comando para iniciar o BOT.
         """
         return
+
+    @staticmethod
+    async def run_api() -> None:
+        _app = app()
+        _app.listen(5000)    
+        shutdown_event = asyncio.Event()
+        await shutdown_event.wait()

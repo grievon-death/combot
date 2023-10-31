@@ -1,8 +1,12 @@
-from sqlalchemy import String
-from sqlalchemy.orm import Mapped, mapped_column
+from typing import NewType, Dict
+
+from sqlalchemy import String, select
+from sqlalchemy.orm import Mapped, mapped_column, selectinload
+from sqlalchemy.ext.asyncio import async_sessionmaker, AsyncSession
 
 from core.models.sql.base import BaseTable
 
+QueryType = NewType('PossibleClass', object)
 
 class PossibleClasses(BaseTable):
     __tablename__ = 'possible_classes'
@@ -35,6 +39,16 @@ class PossibleClasses(BaseTable):
         default=5,
     )
 
+    @staticmethod
+    async def query(session: async_sessionmaker[AsyncSession], **kwargs: Dict) -> tuple[QueryType]:
+        async with session() as conn:
+            _stmt = select(PossibleClasses).options(selectinload(PossibleClasses.name))
+            _result = await session.execute(_stmt)
+        
+            return _result.scalars()
 
-def migration(engine: object) -> None:
-    PossibleClasses.metadata.create_all(engine)
+
+async def migration(engine: object) -> None:
+    async with engine.begin() as conn:
+        await conn.run_sync(PossibleClasses.metadata.create_all)
+    

@@ -4,13 +4,13 @@
 
 # NOSQL: Será usado para iniciar as ações de personagem. Eg: Batalhas, Lojas, Expedições.
 
-from sqlalchemy import create_engine
+from sqlalchemy.ext.asyncio import create_async_engine
 from pymongo import MongoClient
 
 from settings.general import SQL_CONF, NOSQL_CONF
 
 
-SQL_URL =  'mysql://{}:{}@{}:{}/{}'.format(
+SQL_URL =  'postgresql+asyncpg://{}:{}@{}:{}/{}'.format(
     SQL_CONF['user'],
     SQL_CONF['password'],
     SQL_CONF['host'],
@@ -18,7 +18,7 @@ SQL_URL =  'mysql://{}:{}@{}:{}/{}'.format(
     SQL_CONF['db'],
 )
 
-sql_engine = create_engine(
+sql_engine = create_async_engine(
     SQL_URL,
     echo=True, # Loga informações de conexão com o banco de dados.
 )

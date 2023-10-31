@@ -45,5 +45,6 @@ class Character(BaseTable):
     # Talvez salvar no Mongo e recuperar de lá.
 
 
-def migration(engine: object) -> None:
-    Character.metadata.create_all(engine)
+async def migration(engine: object) -> None:
+    async with engine.begin() as conn:
+        await conn.run_sync(Character.metadata.create_all)
