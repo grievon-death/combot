@@ -2,12 +2,12 @@
 from sqlalchemy import String
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
-from models.sql.classes import PossibleClasses
-from models.cursors import SqlBase
+from core.models.sql.base import BaseTable
+from core.models.sql.classes import PossibleClasses
 
 
-class Character(SqlBase):
-    __table__ = 'user_character'
+class Character(BaseTable):
+    __tablename__ = 'user_character'
 
     id: Mapped[int] = mapped_column(
         primary_key=True,
@@ -28,7 +28,7 @@ class Character(SqlBase):
     )
     energy: Mapped[int] = mapped_column(
         nullable=False,
-        defaul=100,
+        default=100,
     )
     atack: Mapped[int] = mapped_column(
         nullable=False,
@@ -40,7 +40,10 @@ class Character(SqlBase):
     )
     job: Mapped[PossibleClasses] = relationship(
         back_populates='user_character',
-        nullable=True,
     )
     # TODO: Varificar uma forma de fazer a bolsa.
     # Talvez salvar no Mongo e recuperar de lá.
+
+
+def migration(engine: object) -> None:
+    Character.metadata.create_all(engine)

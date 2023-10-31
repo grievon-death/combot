@@ -1,0 +1,1 @@
+from core.models.sql import BaseTable

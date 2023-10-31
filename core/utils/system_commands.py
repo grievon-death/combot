@@ -1,6 +1,7 @@
 import logging
 
-from core.models.cursors import sql_engine, SqlBase
+from core.models.cursors import sql_engine
+from core.models.sql import classes, chars
 
 
 class Command:
@@ -17,7 +18,8 @@ class Command:
         """
         try:
             Command._log.info('Iniciando a migração.')
-            SqlBase.metadata.create_all(sql_engine)
+            classes.migration(sql_engine)
+            chars.migration(sql_engine)
         except Exception as e:
             Command._log.debug('Ops... Problemas com a migração dos dados.')
             raise Exception(e.args)
