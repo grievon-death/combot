@@ -2,8 +2,10 @@ import asyncio
 import logging
 
 from core.api.app import app
+from core.bot.client import client
 from core.models.cursors import sql_engine
 from core.models.sql import classes, chars
+from settings.general import BOT_TOKEN
 
 
 class Command:
@@ -33,7 +35,7 @@ class Command:
         """
         Comando para iniciar o BOT.
         """
-        return
+        client.run(BOT_TOKEN)
 
     @staticmethod
     async def run_api() -> None:

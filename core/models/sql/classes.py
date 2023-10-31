@@ -47,6 +47,10 @@ class PossibleClasses(BaseTable):
         
             return _result.scalars()
 
+    @staticmethod
+    async def insert(session: async_sessionmaker[AsyncSession], **kwargs: Dict) -> None:
+        return
+
 
 async def migration(engine: object) -> None:
     async with engine.begin() as conn:

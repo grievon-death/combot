@@ -27,5 +27,7 @@ if __name__ == '__main__':
             asyncio.run(Command.migrate())
         case 'api':
             asyncio.run(Command.run_api())
+        case 'bot':
+            Command.run_combot()
         case _:
             parser.print_help()
