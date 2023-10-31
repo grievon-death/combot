@@ -2,6 +2,7 @@
 """
 Arquivo com chamada das principais funções do sistema no formado de comando.
 """
+import asyncio
 from logging import config as logger
 from argparse import ArgumentParser
 
@@ -13,7 +14,7 @@ parser.add_argument(
     'command',
     action='store',
     type=str,
-    help='[run, migrate, test]'
+    help='[api, bot, migrate, test]'
 )
 args = parser.parse_args()
 
@@ -23,6 +24,8 @@ if __name__ == '__main__':
 
     match args.command:
         case 'migrate':
-            Command.migrate()
+            asyncio.run(Command.migrate())
+        case 'api':
+            asyncio.run(Command.run_api())
         case _:
             parser.print_help()
