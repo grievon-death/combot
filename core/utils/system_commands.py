@@ -1,8 +1,10 @@
 import asyncio
 import logging
 
+from discord import Intents
+
 from core.api.app import app
-from core.bot.client import client
+from core.bot.commands import Bot
 from core.models.cursors import sql_engine
 from core.models.sql import classes, chars
 from settings.general import BOT_TOKEN
@@ -35,7 +37,10 @@ class Command:
         """
         Comando para iniciar o BOT.
         """
-        client.run(BOT_TOKEN)
+        _intents: Intents = Intents.default()
+        _intents.message_content=True
+        _client = Bot(intents=_intents)
+        _client.run(BOT_TOKEN)
 
     @staticmethod
     async def run_api() -> None:
