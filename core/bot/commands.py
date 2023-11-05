@@ -1,19 +1,26 @@
 import logging
 
-from discord import Embed, Intents
-from discord.ext import commands
+from discord import Embed
 
-from core.bot.client import Client
+from core.utils.custom_erros import BotError
+from core.models.sql.chars import Character, PossibleClasses
+from core.bot.Client import client
 
-_bot = commands.Bot(command_prefix='--', intents=Intents.all())
+_log = logging.getLogger(__name__)
 
 
-class Bot(Client):
-    _log = logging.getLogger(__name__)
+@client.command(aliases=['start', 'inciar', 'create'])
+async def init(bot: object, *args: str) -> str:
+    """
+    Inicia o seu personagem no jogo.
+    Argumento obrigatório:
+        job=Classe escolhida.
 
-    @_bot.command(aliases=['start', 'strt', 'inciar'])
-    async def init(bot: object, *args: str) -> str:
-        """
-        Inicia o seu personagem no jogo.
-        """
-        return await bot.send('Comando funcinoando, agora só falta terminar.')
+    Em caso de dúvidas, veja o --help.
+    """
+    _log.debug('Debugando o comando init.')
+    if not args:
+        _log.debug(BotError.argsNotFound)
+        return await bot.send(BotError.argsNotFound)
+
+    return await bot.send('Comando funcinoando, agora só falta terminar.')

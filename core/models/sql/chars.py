@@ -1,7 +1,10 @@
-# TODO: Modelar numa tabela SQL um personagem, único, baseado no ID de usuário do Discord.]
-from sqlalchemy import String
-from sqlalchemy.orm import Mapped, mapped_column, relationship
+from typing import Dict, List
 
+from sqlalchemy import String, select
+from sqlalchemy.orm import Mapped, mapped_column, relationship
+from sqlalchemy.ext.asyncio import async_sessionmaker
+
+from core.models.cursors import sql_engine
 from core.models.sql.base import BaseTable
 from core.models.sql.classes import PossibleClasses
 
@@ -43,6 +46,25 @@ class Character(BaseTable):
     )
     # TODO: Varificar uma forma de fazer a bolsa.
     # Talvez salvar no Mongo e recuperar de lá.
+
+    @staticmethod
+    async def create(user: str, job: str=None) -> Dict:
+        """
+        Criar um personagem no banco de dados para tornar o usuário jogável.
+        """
+        session = async_sessionmaker(sql_engine, expire_on_commit=False)
+
+        async with session() as _session:
+            async with _session.begin():
+                _session.add(Character(user=user, job=job))
+            
+            stmt = select(Character)\
+                .options(Character.user==user)
+            _result = await _session.execute(stmt)
+
+        await sql_engine.dispose()  # Fecha e limpa as conexões com o banco.
+
+        return _result.scalar()
 
 
 async def migration(engine: object) -> None:

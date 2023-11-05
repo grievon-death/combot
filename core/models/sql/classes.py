@@ -38,6 +38,10 @@ class PossibleClasses(BaseTable):
         nullable=False,
         default=5,
     )
+    speed: Mapped[int] = mapped_column(
+        nullable=False,
+        default=5,
+    )
 
     @staticmethod
     async def query(session: async_sessionmaker[AsyncSession], **kwargs: Dict) -> tuple[QueryType]:

@@ -1,0 +1,33 @@
+{
+    "rules": {
+        "base_max_points": 100,
+        "inital_life_points": 500
+    },
+
+    "classes": [
+        {
+            "name": "mago",
+            "life": 5,
+            "energy": 5,
+            "atack": 5,
+            "defense": 5,
+            "speed": 5
+        },
+        {
+            "name": "cavaleiro",
+            "life": 5,
+            "energy": 5,
+            "atack": 5,
+            "defense": 5,
+            "speed": 5
+        },
+        {
+            "name": "assassino",
+            "life": 5,
+            "energy": 5,
+            "atack": 5,
+            "defense": 5,
+            "speed": 5
+        }
+    ]
+}
