@@ -1,33 +1,33 @@
 {
     "rules": {
-        "base_max_points": 100,
-        "inital_life_points": 500
+        "base_max_points": 150,
+        "inital_life_points": 200
     },
 
     "classes": [
         {
             "name": "mago",
-            "life": 5,
-            "energy": 5,
-            "atack": 5,
-            "defense": 5,
-            "speed": 5
+            "life": 25,
+            "energy": 40,
+            "atack": 30,
+            "defense": 20,
+            "speed": 35
         },
         {
             "name": "cavaleiro",
-            "life": 5,
-            "energy": 5,
-            "atack": 5,
-            "defense": 5,
-            "speed": 5
+            "life": 50,
+            "energy": 25,
+            "atack": 30,
+            "defense": 25,
+            "speed": 20
         },
         {
             "name": "assassino",
-            "life": 5,
-            "energy": 5,
-            "atack": 5,
-            "defense": 5,
-            "speed": 5
+            "life": 25,
+            "energy": 40,
+            "atack": 25,
+            "defense": 20,
+            "speed": 40
         }
     ]
 }
