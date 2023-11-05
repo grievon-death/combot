@@ -32,15 +32,9 @@ async def validate_max_points_distribituion(max_points: int, classes: List[Dict]
     for job in classes:
         _name = job.pop('name')
         _values = list(job.values())
+        job['name'] = _name
 
-        try:
-            if sum(_values) != max_points:
-                return False
-        except TypeError as e:
-            _log.error('Tipo inesperado nas pontuações.')
+        if sum(_values) != max_points:
             return False
-    
-    del _name
-    del _values
 
     return True
