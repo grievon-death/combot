@@ -41,14 +41,9 @@ class Character(BaseTable):
         nullable=False,
         default=5,
     )
-    job: Mapped[PossibleClasses] = relationship(
-        back_populates='user_character',
-    )
-    # TODO: Varificar uma forma de fazer a bolsa.
-    # Talvez salvar no Mongo e recuperar de lá.
 
     @staticmethod
-    async def create(user: str, job: str=None) -> Dict:
+    async def insert(user: str, job: str=None) -> Dict:
         """
         Criar um personagem no banco de dados para tornar o usuário jogável.
         """
@@ -56,8 +51,8 @@ class Character(BaseTable):
 
         async with session() as _session:
             async with _session.begin():
-                _session.add(Character(user=user, job=job))
-            
+                _session.add(Character(user=user))
+
             stmt = select(Character)\
                 .options(Character.user==user)
             _result = await _session.execute(stmt)
