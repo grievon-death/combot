@@ -41,21 +41,31 @@ class Command:
             Command._log.info('Iniciando a população do banco de dados.')
             _content = await get_populate_content()
 
+            if not isinstance(_content.get('classes'), list):
+                Command._log.debug('O objeto "classe" não existe, ou não é um formato válido de lista')
+
             if not await validate_max_points_distribituion(
                 _content['rules']['base_max_points'],
                 _content['classes']
             ):
                 Command._log.error('Ops... A quantidade de pontos distribuídos não está de acordo com a pontuação máxima.')
                 return
+
+            for item in _content['classes']:
+                await classes.PossibleClasses.insert(
+                    name=item['name'],
+                    life=item['life'],
+                    energy=item['energy'],
+                    atack=item['atack'],
+                    defense=item['defense'],
+                    speed=item['speed'],
+                )
+
         except KeyError as e:
-            Command._log.error('Ops... Chave obrigatória não encontrada {}'.format(
-                e.args
-            ))
+            Command._log.error('Ops... Chave obrigatória não encontrada %s', e.args)
             return
         except Exception as e:
-            Command._log.debug('Ops... Não foi possível popular o banco de dados.\n{}'.format(
-                e.args
-            ))
+            Command._log.debug('Ops... Não foi possível popular o banco de dados.\n %s', e.args)
             return
 
     @staticmethod
